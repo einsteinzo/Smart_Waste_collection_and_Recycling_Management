@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collector Dashboard — WasteWise Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+        <span class="badge bg-primary-subtle text-primary small ms-2">Collector Field Ops</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-3">
+        <!-- Duty Toggle Switch -->
+        <div class="form-check form-switch me-3 mb-0">
+          <input class="form-check-input" type="checkbox" id="dutyToggle" checked>
+          <label class="form-check-label fw-bold small text-dark" for="dutyToggle" id="dutyStatusText">On Duty</label>
+        </div>
+
+        <div class="d-none d-md-block text-end">
+          <span class="fw-bold d-block user-display-name">Collector</span>
+          <small class="text-muted user-display-email">collector@wastewise.org</small>
+        </div>
+        <button type="button" id="logoutBtn" onclick="handleLogout(event)" class="btn btn-outline-danger btn-sm logout-btn">
+          <i class="bi bi-box-arrow-right me-1"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Content -->
+  <main class="container-fluid px-4 py-4">
+    
+    <!-- Header row -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+      <div>
+        <h3 class="fw-bold text-dark mb-1">Field Collector Dashboard</h3>
+        <p class="text-muted mb-0">Manage assigned door-to-door pickups, record verified weights, and confirm drop-offs.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <select class="form-select form-select-sm" id="collectorStatusFilter" onchange="loadAssignedPickups()">
+          <option value="All" selected>All Assigned Jobs</option>
+          <option value="Assigned">To Collect (Assigned)</option>
+          <option value="Collected">In Transit (Collected)</option>
+          <option value="Delivered">Delivered (Pending Center)</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-lg-4 col-xl">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #0284c7;">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-muted small fw-bold">TO COLLECT</span>
+              <h3 class="fw-bold text-dark mb-0" id="statAssignedJobs">0</h3>
+            </div>
+            <div class="stat-icon bg-info-subtle text-info">
+              <i class="bi bi-geo-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4 col-xl">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #8b5cf6;">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-muted small fw-bold">IN TRANSIT</span>
+              <h3 class="fw-bold text-dark mb-0" id="statCollectedJobs">0</h3>
+            </div>
+            <div class="stat-icon bg-purple text-white" style="background:#ede9fe; color:#6d28d9 !important;">
+              <i class="bi bi-truck"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4 col-xl">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #ea580c;">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-muted small fw-bold">DELIVERED</span>
+              <h3 class="fw-bold text-dark mb-0" id="statDeliveredJobs">0</h3>
+            </div>
+            <div class="stat-icon bg-warning-subtle text-warning">
+              <i class="bi bi-building-check"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4 col-xl">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #10b981;">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-muted small fw-bold">COMPLETED</span>
+              <h3 class="fw-bold text-success mb-0" id="statCompletedJobs">0</h3>
+            </div>
+            <div class="stat-icon bg-success-subtle text-success">
+              <i class="bi bi-check2-circle"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-4 col-xl">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #16a34a;">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <span class="text-muted small fw-bold">TOTAL WEIGHT</span>
+              <h3 class="fw-bold text-success mb-0" id="statTotalWeightKg">0 kg</h3>
+            </div>
+            <div class="stat-icon bg-success-subtle text-success">
+              <i class="bi bi-speedometer"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Assigned Pickups Grid -->
+    <h5 class="fw-bold text-dark mb-3"><i class="bi bi-list-task text-primary me-2"></i>My Field Assignments</h5>
+    <div class="row g-3" id="assignedPickupsList">
+      <!-- Populated via collector.js -->
+    </div>
+
+    <div id="collectorEmptyState" class="card shadow-sm border-0 p-5 text-center d-none">
+      <i class="bi bi-clipboard-check text-muted display-4"></i>
+      <h5 class="fw-bold text-dark mt-3">All Caught Up!</h5>
+      <p class="text-muted">No pending pickup assignments in this status category. Stand by for new municipal dispatches.</p>
+    </div>
+
+  </main>
+
+  <!-- Modal 1: Record Collection Details -->
+  <div class="modal fade" id="recordCollectionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold"><i class="bi bi-box-seam me-2"></i>Record Waste Collection</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="collectionForm">
+          <div class="modal-body p-4">
+            <div class="p-3 rounded bg-light mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Job ID:</span>
+                <strong id="modalCollectId">—</strong>
+              </div>
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Waste Stream:</span>
+                <span id="modalCollectCategory" class="fw-bold text-dark">—</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Citizen Estimate:</span>
+                <span id="modalCollectEstimated">—</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="collectedWeight" class="form-label fw-bold small">Actual Collected Weight (kg) <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input type="number" class="form-control" id="collectedWeight" step="0.1" min="0.1" max="20000" required>
+                <span class="input-group-text">kg</span>
+              </div>
+              <small class="text-muted">Read directly from vehicle/portable digital balance</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="collectionNotes" class="form-label fw-bold small">Collector Observations & Quality Notes</label>
+              <textarea class="form-control" id="collectionNotes" rows="2" placeholder="e.g. Segregation quality good; packed in labeled bags; dry"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary fw-bold">
+              <i class="bi bi-check-lg me-1"></i> Confirm Collection
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Record Facility Delivery -->
+  <div class="modal fade" id="recordDeliveryModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title fw-bold"><i class="bi bi-truck me-2"></i>Record Facility Drop-off</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="deliveryForm">
+          <div class="modal-body p-4">
+            <div class="p-3 rounded bg-light mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Job ID:</span>
+                <strong id="modalDeliverId">—</strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Destination Facility:</span>
+                <span id="modalDeliverCenter" class="fw-bold text-dark">—</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="deliveryNotes" class="form-label fw-bold small">Drop-off / Bay Confirmation Notes</label>
+              <textarea class="form-control" id="deliveryNotes" rows="3" required placeholder="e.g. Offloaded at Reception Bay 2. Handed over to center material receiving desk."></textarea>
+            </div>
+            <div class="alert alert-info small mb-0">
+              <i class="bi bi-info-circle me-1"></i> Once recorded, the facility will verify and process the intake to complete the job.
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-warning fw-bold text-dark">
+              <i class="bi bi-building-check me-1"></i> Confirm Delivery
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/collector.js"></script>
+</body>
+</html>

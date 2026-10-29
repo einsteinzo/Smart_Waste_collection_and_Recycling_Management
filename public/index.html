@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WasteWise — Smart Waste Collection & Recycling Portal</title>
+  <meta name="description" content="WasteWise connects citizens, waste collectors, recycling facilities, and administrators for sustainable municipal waste management and resource recovery.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+        <span class="brand-badge d-none d-sm-inline">Municipal Portal</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+          <li class="nav-item"><a class="nav-link active" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/guide.html">Segregation Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="/centers.html">Recycling Directory</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact.html">Help & FAQ</a></li>
+        </ul>
+
+        <div id="auth-nav-container" class="d-flex align-items-center gap-2">
+          <a href="/login.html" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Log In
+          </a>
+          <a href="/register.html" class="btn btn-primary btn-sm">
+            <i class="bi bi-person-plus me-1"></i> Register as Citizen
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <div class="hero-pill">
+            <i class="bi bi-award-fill text-warning"></i>
+            <span>Municipal Circular Economy & Resource Recovery Initiative</span>
+          </div>
+          <h1 class="display-4 fw-bold mb-3 text-dark">
+            Transform Waste into Value with <span class="text-success">Smart Recycling</span>
+          </h1>
+          <p class="lead text-muted mb-4">
+            WasteWise connects <strong>Citizens</strong>, municipal <strong>Collectors</strong>, and authorized <strong>Recycling Facilities</strong> in one verified, end-to-end digital lifecycle. Request a pickup from your doorstep and track materials until they are recycled.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="/register.html" class="btn btn-primary btn-lg shadow-sm">
+              <i class="bi bi-calendar-plus me-2"></i> Request Doorstep Pickup
+            </a>
+            <a href="/guide.html" class="btn btn-outline-primary btn-lg">
+              <i class="bi bi-book me-2"></i> Segregation Guide
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+            <div class="card-body p-4 bg-white">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <span class="badge bg-success-subtle text-success fw-bold px-3 py-2">
+                  <i class="bi bi-activity me-1"></i> Live Portal Telemetry
+                </span>
+                <span class="text-muted small">Updated in real-time</span>
+              </div>
+              <div class="row g-3 text-center">
+                <div class="col-6">
+                  <div class="p-3 rounded-3 bg-light">
+                    <h3 class="fw-bold text-success mb-0" id="homeTotalPickups">—</h3>
+                    <small class="text-muted">Total Collections</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded-3 bg-light">
+                    <h3 class="fw-bold text-primary mb-0" id="homeCompletedPickups">—</h3>
+                    <small class="text-muted">Completed Pickups</small>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="p-3 rounded-3 bg-success text-white">
+                    <h2 class="fw-bold mb-0" id="homeTotalRecycledKg">—</h2>
+                    <small class="text-white-50">Total Materials Recovered & Recycled</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded-3 bg-light">
+                    <h4 class="fw-bold text-dark mb-0" id="homeTotalCitizens">—</h4>
+                    <small class="text-muted">Active Citizens</small>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="p-3 rounded-3 bg-light">
+                    <h4 class="fw-bold text-dark mb-0" id="homePartnerCenters">—</h4>
+                    <small class="text-muted">Partner Facilities</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5-Stage Workflow Section -->
+  <section class="py-5 bg-white border-bottom">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="badge bg-success-subtle text-success fw-bold px-3 py-2 mb-2">Closed-Loop Verification</span>
+        <h2 class="fw-bold">How The WasteWise Lifecycle Works</h2>
+        <p class="text-muted mx-auto" style="max-width: 650px;">
+          Every collection is tracked through an auditable, five-stage database workflow ensuring zero illegal dumping and maximum resource recovery.
+        </p>
+      </div>
+
+      <div class="row g-4 text-center">
+        <div class="col-md-2 offset-md-1">
+          <div class="p-3 h-100 border rounded-3 bg-light">
+            <div class="stat-icon bg-warning text-dark mx-auto mb-3">1</div>
+            <h6 class="fw-bold">1. Requested</h6>
+            <p class="small text-muted mb-0">Citizen schedules pickup with category, quantity, and address.</p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="p-3 h-100 border rounded-3 bg-light">
+            <div class="stat-icon bg-info text-white mx-auto mb-3">2</div>
+            <h6 class="fw-bold">2. Assigned</h6>
+            <p class="small text-muted mb-0">Admin assigns an active collector and nearest authorized facility.</p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="p-3 h-100 border rounded-3 bg-light">
+            <div class="stat-icon bg-purple text-white mx-auto mb-3" style="background:#8b5cf6;">3</div>
+            <h6 class="fw-bold">3. Collected</h6>
+            <p class="small text-muted mb-0">Collector weighs waste on-site and records digital collection log.</p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="p-3 h-100 border rounded-3 bg-light">
+            <div class="stat-icon bg-warning text-dark mx-auto mb-3" style="background:#ea580c; color:white !important;">4</div>
+            <h6 class="fw-bold">4. Delivered</h6>
+            <p class="small text-muted mb-0">Collector drops waste at recycling center intake bay with delivery notes.</p>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="p-3 h-100 border rounded-3 bg-light">
+            <div class="stat-icon bg-success text-white mx-auto mb-3">5</div>
+            <h6 class="fw-bold">5. Completed</h6>
+            <p class="small text-muted mb-0">Facility verifies received weight, rejects contaminants, and records recycling.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accepted Categories Grid -->
+  <section class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-5">
+        <span class="badge bg-primary-subtle text-primary fw-bold px-3 py-2 mb-2">Source Segregation</span>
+        <h2 class="fw-bold">Accepted Waste Streams</h2>
+        <p class="text-muted">Separate your recyclables at source to maximize processing efficiency.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-success">
+            <h5 class="fw-bold text-success"><i class="bi bi-tree me-2"></i>Organic Waste</h5>
+            <p class="small text-muted mb-0">Kitchen scraps, fruit/vegetable peels, leftover food, horticultural green waste, fallen leaves. Processed into organic compost.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-info">
+            <h5 class="fw-bold text-info"><i class="bi bi-cup-straw me-2"></i>Plastic Recyclables</h5>
+            <p class="small text-muted mb-0">Clean PET beverage bottles, HDPE milk jugs, hard plastic containers, packaging wrap. Flaked and recycled into synthetic yarn.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-warning">
+            <h5 class="fw-bold text-warning"><i class="bi bi-box-seam me-2"></i>Paper & Cardboard</h5>
+            <p class="small text-muted mb-0">Corrugated shipping cartons, newspapers, old books, clean paper sheets. Pulped and remanufactured into recycled craft paper.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-secondary">
+            <h5 class="fw-bold text-secondary"><i class="bi bi-cup me-2"></i>Glass Containers</h5>
+            <p class="small text-muted mb-0">Clear and colored bottles, jars, glass food containers. Crushed into cullet and melted to produce fresh glass packaging.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-dark">
+            <h5 class="fw-bold text-dark"><i class="bi bi-nut me-2"></i>Metal & Scrap</h5>
+            <p class="small text-muted mb-0">Aluminum beverage cans, tin food cans, iron utensils, copper wiring scrap. Melted with 95% energy savings over virgin ore.</p>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+          <div class="card h-100 p-3 border-0 shadow-sm border-top border-4 border-danger">
+            <h5 class="fw-bold text-danger"><i class="bi bi-laptop me-2"></i>Electronic Waste</h5>
+            <p class="small text-muted mb-0">Old smartphones, obsolete laptops, chargers, cables, circuit boards. Processed in certified facilities for safe heavy metal recovery.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Banner -->
+  <section class="py-5 text-white" style="background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-3">Ready to Build a Cleaner, Greener City?</h2>
+      <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+        Join hundreds of citizens and verified municipal recycling centers today. Register in less than 2 minutes.
+      </p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="/register.html" class="btn btn-light btn-lg text-success fw-bold shadow">
+          <i class="bi bi-person-plus me-1"></i> Get Started as Citizen
+        </a>
+        <a href="/login.html" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-shield-lock me-1"></i> Staff / Partner Login
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+          <span class="fw-bold"><i class="bi bi-recycle text-success me-1"></i> WasteWise Portal</span>
+          <p class="small text-muted mb-0">College Web Technology IA3 Project — Department of Computer Science & Engineering</p>
+        </div>
+        <div class="col-md-6 text-center text-md-end">
+          <a href="/guide.html" class="text-white-50 text-decoration-none me-3 small">Segregation Guide</a>
+          <a href="/centers.html" class="text-white-50 text-decoration-none me-3 small">Directory</a>
+          <a href="/contact.html" class="text-white-50 text-decoration-none small">Support & Help</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/public.js"></script>
+</body>
+</html>

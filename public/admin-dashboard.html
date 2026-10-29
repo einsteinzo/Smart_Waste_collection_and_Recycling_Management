@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — WasteWise Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+        <span class="badge bg-dark text-white small ms-2">Central Administration</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-none d-md-block text-end">
+          <span class="fw-bold d-block user-display-name">System Administrator</span>
+          <small class="text-muted user-display-email">admin@wastewise.org</small>
+        </div>
+        <button type="button" id="logoutBtn" onclick="handleLogout(event)" class="btn btn-outline-danger btn-sm logout-btn">
+          <i class="bi bi-box-arrow-right me-1"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard-layout">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <div class="dashboard-sidebar-header">
+        <small class="text-uppercase text-muted fw-bold">Admin Console</small>
+      </div>
+      <nav class="nav flex-column">
+        <a class="sidebar-nav-link active" href="#overview" data-bs-toggle="tab" data-bs-target="#tabAdminOverview">
+          <i class="bi bi-graph-up-arrow"></i> System Analytics
+        </a>
+        <a class="sidebar-nav-link" href="#pickups" data-bs-toggle="tab" data-bs-target="#tabAdminPickups">
+          <i class="bi bi-calendar2-check"></i> Pickup Dispatch & Allocations
+        </a>
+        <a class="sidebar-nav-link" href="#users" data-bs-toggle="tab" data-bs-target="#tabAdminUsers">
+          <i class="bi bi-people"></i> User Directory
+        </a>
+        <a class="sidebar-nav-link" href="#centers" data-bs-toggle="tab" data-bs-target="#tabAdminCenters">
+          <i class="bi bi-building"></i> Recycling Facilities
+        </a>
+        <a class="sidebar-nav-link" href="#logs" data-bs-toggle="tab" data-bs-target="#tabAdminLogs">
+          <i class="bi bi-shield-check"></i> Audit History
+        </a>
+        <a class="sidebar-nav-link text-danger logout-btn mt-3 border-top pt-3" href="#logout" onclick="handleLogout(event); return false;">
+          <i class="bi bi-box-arrow-right text-danger"></i> Log Out
+        </a>
+      </nav>
+
+      <div class="mt-auto p-3 bg-light rounded-3 border text-center small text-muted">
+        <i class="bi bi-shield-lock-fill text-dark fs-4 d-block mb-1"></i>
+        <span>Master Admin Authorization</span>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-content">
+      <div class="tab-content">
+        
+        <!-- Tab 1: Overview & Interactive Charts -->
+        <div class="tab-pane fade show active" id="tabAdminOverview">
+          
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+            <div>
+              <h3 class="fw-bold text-dark mb-1">Municipal Telemetry & Analytics</h3>
+              <p class="text-muted mb-0">Real-time status overview, collector workloads, and material diversion metrics.</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="button" class="btn btn-outline-success btn-sm fw-semibold" onclick="switchAdminTab('tabAdminPickups')">
+                <i class="bi bi-truck me-1"></i> Manage & Dispatch Pickups
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="loadAdminStats()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh Metrics
+              </button>
+            </div>
+          </div>
+
+          <!-- Summary Metric Cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #0f172a;">
+                <span class="text-muted small fw-bold">TOTAL USERS</span>
+                <h3 class="fw-bold text-dark mb-0" id="statTotalUsers">0</h3>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100 cursor-pointer" style="border-left-color: #0284c7; cursor: pointer;" onclick="switchAdminTab('tabAdminPickups')" title="Click to view all pickups">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted small fw-bold">TOTAL PICKUPS</span>
+                  <i class="bi bi-arrow-right-short text-info fs-5"></i>
+                </div>
+                <h3 class="fw-bold text-dark mb-0" id="statTotalPickups">0</h3>
+                <small class="text-primary mt-1 d-block"><i class="bi bi-list-task me-1"></i>View Table &rarr;</small>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100 cursor-pointer" style="border-left-color: #f59e0b; cursor: pointer;" onclick="switchAdminTab('tabAdminPickups')" title="Click to dispatch pending pickups">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted small fw-bold">PENDING / ASSIGNED</span>
+                  <i class="bi bi-arrow-right-short text-warning fs-5"></i>
+                </div>
+                <h3 class="fw-bold text-dark mb-0" id="statPendingPickups">0</h3>
+                <small class="text-warning mt-1 d-block fw-semibold"><i class="bi bi-truck me-1"></i>Dispatch Now &rarr;</small>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #10b981;">
+                <span class="text-muted small fw-bold">COMPLETED</span>
+                <h3 class="fw-bold text-dark mb-0" id="statCompletedPickups">0</h3>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #8b5cf6;">
+                <span class="text-muted small fw-bold">COLLECTED WEIGHT</span>
+                <h3 class="fw-bold text-dark mb-0" id="statTotalCollectedKg">0 kg</h3>
+              </div>
+            </div>
+
+            <div class="col-sm-6 col-xl-2">
+              <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #2e7d32;">
+                <span class="text-muted small fw-bold">RECYCLED WEIGHT</span>
+                <h3 class="fw-bold text-success mb-0" id="statTotalRecycledKg">0 kg</h3>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts Row -->
+          <div class="row g-4 mb-4">
+            <div class="col-lg-5">
+              <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-pie-chart text-success me-2"></i>Pickup Status Distribution</h5>
+                <div style="position: relative; height: 280px;">
+                  <canvas id="statusChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-7">
+              <div class="card shadow-sm border-0 rounded-4 p-4 h-100">
+                <h5 class="fw-bold text-dark mb-3"><i class="bi bi-bar-chart-line text-success me-2"></i>Waste Category Diversion</h5>
+                <div style="position: relative; height: 280px;">
+                  <canvas id="categoryChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 2: Pickup Dispatch & Assignment -->
+        <div class="tab-pane fade" id="tabAdminPickups">
+          
+          <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+            <div class="card-header bg-white py-3 border-bottom">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <h5 class="fw-bold text-dark mb-0"><i class="bi bi-truck text-success me-2"></i>Manage & Dispatch Pickups</h5>
+                
+                <div class="d-flex flex-wrap gap-2">
+                  <input type="text" class="form-control form-control-sm" id="adminPickupSearch" placeholder="Search by citizen, ID, city..." oninput="loadAdminPickups()" style="width: 200px;">
+                  
+                  <select class="form-select form-select-sm" id="adminPickupStatusFilter" onchange="loadAdminPickups()" style="width: 150px;">
+                    <option value="All" selected>All Statuses</option>
+                    <option value="Requested">Requested (Unassigned)</option>
+                    <option value="Assigned">Assigned</option>
+                    <option value="Collected">Collected</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+
+                  <select class="form-select form-select-sm" id="adminPickupCategoryFilter" onchange="loadAdminPickups()" style="width: 150px;">
+                    <option value="All">All Categories</option>
+                    <option value="Organic waste">Organic</option>
+                    <option value="Plastic">Plastic</option>
+                    <option value="Paper and cardboard">Paper</option>
+                    <option value="Glass">Glass</option>
+                    <option value="Metal">Metal</option>
+                    <option value="Electronic waste">E-Waste</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-uppercase text-muted">
+                    <tr>
+                      <th>ID</th>
+                      <th>Citizen Details</th>
+                      <th>Material Stream</th>
+                      <th>Est. Qty</th>
+                      <th>Status</th>
+                      <th>Dispatch Assignment</th>
+                      <th class="text-end">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminPickupsTableBody">
+                    <!-- Populated via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 3: User Directory -->
+        <div class="tab-pane fade" id="tabAdminUsers">
+          
+          <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+              <h5 class="fw-bold text-dark mb-0"><i class="bi bi-people text-success me-2"></i>User Accounts & Roles</h5>
+              
+              <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createUserModal">
+                  <i class="bi bi-person-plus me-1"></i> Add Staff / Partner User
+                </button>
+
+                <input type="text" class="form-control form-control-sm" id="userSearchInput" placeholder="Search user name, email, phone..." oninput="loadAdminUsers()" style="width: 220px;">
+                
+                <select class="form-select form-select-sm" id="userRoleFilter" onchange="loadAdminUsers()" style="width: 140px;">
+                  <option value="All">All Roles</option>
+                  <option value="citizen">Citizens</option>
+                  <option value="collector">Collectors</option>
+                  <option value="center">Recycling Centers</option>
+                  <option value="admin">Administrators</option>
+                </select>
+
+                <select class="form-select form-select-sm" id="userStatusFilter" onchange="loadAdminUsers()" style="width: 140px;">
+                  <option value="All">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="pending_approval">Pending Approval</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-uppercase text-muted">
+                    <tr>
+                      <th>User</th>
+                      <th>Role</th>
+                      <th>Contact</th>
+                      <th>Account Status</th>
+                      <th>Joined Date</th>
+                      <th class="text-end">Manage Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminUsersTableBody">
+                    <!-- Populated via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 4: Recycling Facilities -->
+        <div class="tab-pane fade" id="tabAdminCenters">
+          
+          <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+              <h5 class="fw-bold text-dark mb-0"><i class="bi bi-building text-success me-2"></i>Authorized Recycling Facilities</h5>
+              <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#createCenterModal">
+                <i class="bi bi-plus-circle me-1"></i> Register New Facility
+              </button>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-uppercase text-muted">
+                    <tr>
+                      <th>Facility Name & Location</th>
+                      <th>Contact Details</th>
+                      <th>Accepted Waste Streams</th>
+                      <th>Daily Capacity</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminCentersTableBody">
+                    <!-- Populated via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tab 5: Audit History -->
+        <div class="tab-pane fade" id="tabAdminLogs">
+          
+          <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center">
+              <h5 class="fw-bold text-dark mb-0"><i class="bi bi-shield-check text-success me-2"></i>System Activity & Audit Trail</h5>
+              <button class="btn btn-outline-secondary btn-sm" onclick="loadAdminLogs()">
+                <i class="bi bi-arrow-clockwise me-1"></i> Refresh Logs
+              </button>
+            </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                  <thead class="table-light small text-uppercase text-muted">
+                    <tr>
+                      <th>Timestamp</th>
+                      <th>Actor</th>
+                      <th>Action</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminLogsTableBody">
+                    <!-- Populated via admin.js -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal 1: Assign Collector & Destination Center -->
+  <div class="modal fade" id="assignModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold"><i class="bi bi-person-check me-2"></i>Assign Pickup Dispatch</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="assignForm">
+          <input type="hidden" id="assignPickupIdInput">
+          <div class="modal-body p-4">
+            
+            <div class="p-3 rounded bg-light mb-3">
+              <div class="d-flex justify-content-between mb-1">
+                <span class="text-muted">Consignment ID:</span>
+                <strong id="assignPickupIdDisplay">—</strong>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="text-muted">Material Stream:</span>
+                <span id="assignCategoryDisplay">—</span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="assignCollectorSelect" class="form-label fw-bold small">Assign Field Collector <span class="text-danger">*</span></label>
+              <select class="form-select" id="assignCollectorSelect" required>
+                <!-- Loaded via admin.js -->
+              </select>
+              <small class="text-muted">Only active, approved collectors are listed.</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="assignCenterSelect" class="form-label fw-bold small">Assign Destination Facility <span class="text-danger">*</span></label>
+              <select class="form-select" id="assignCenterSelect" required>
+                <!-- Loaded via admin.js -->
+              </select>
+              <small class="text-muted">Select an authorized facility matching the waste category.</small>
+            </div>
+
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary fw-bold">
+              <i class="bi bi-check2-circle me-1"></i> Confirm Assignment
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Create User Account -->
+  <div class="modal fade" id="createUserModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title fw-bold"><i class="bi bi-person-plus me-2"></i>Register Staff or Partner Account</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="createUserForm">
+          <div class="modal-body p-4">
+            <div class="mb-3">
+              <label for="newUserName" class="form-label small fw-semibold">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="newUserName" required placeholder="e.g. Suresh Kumar">
+            </div>
+            <div class="mb-3">
+              <label for="newUserEmail" class="form-label small fw-semibold">Email Address <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="newUserEmail" required placeholder="suresh@wastewise.org">
+            </div>
+            <div class="mb-3">
+              <label for="newUserPhone" class="form-label small fw-semibold">Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" id="newUserPhone" required placeholder="10-digit number">
+            </div>
+            <div class="mb-3">
+              <label for="newUserPassword" class="form-label small fw-semibold">Initial Password <span class="text-danger">*</span></label>
+              <input type="password" class="form-control" id="newUserPassword" required minlength="6" placeholder="At least 6 characters">
+            </div>
+            <div class="mb-3">
+              <label for="newUserRole" class="form-label small fw-semibold">Account Role <span class="text-danger">*</span></label>
+              <select class="form-select" id="newUserRole" required onchange="toggleCollectorFields(this.value)">
+                <option value="collector" selected>Waste Collector</option>
+                <option value="center">Recycling Center Facility Manager</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+
+            <!-- Optional Collector Vehicle Details -->
+            <div id="collectorFields">
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label for="newUserVehicleType" class="form-label small fw-semibold">Vehicle Type</label>
+                  <input type="text" class="form-control" id="newUserVehicleType" placeholder="e.g. Electric Van">
+                </div>
+                <div class="col-6">
+                  <label for="newUserVehicleNumber" class="form-label small fw-semibold">Vehicle Reg. No.</label>
+                  <input type="text" class="form-control" id="newUserVehicleNumber" placeholder="e.g. KA-01-EV-1234">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create User Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Register Recycling Center -->
+  <div class="modal fade" id="createCenterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title fw-bold"><i class="bi bi-building me-2"></i>Register Recycling Facility</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="createCenterForm">
+          <div class="modal-body p-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="centerName" class="form-label small fw-semibold">Facility Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="centerName" required placeholder="e.g. GreenEco MRF Hub">
+              </div>
+              <div class="col-md-6">
+                <label for="centerCapacity" class="form-label small fw-semibold">Daily Intake Capacity (kg/day)</label>
+                <input type="number" class="form-control" id="centerCapacity" value="5000">
+              </div>
+              <div class="col-md-6">
+                <label for="centerPhone" class="form-label small fw-semibold">Contact Phone <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" id="centerPhone" required placeholder="+91 80 2345 6789">
+              </div>
+              <div class="col-md-6">
+                <label for="centerEmail" class="form-label small fw-semibold">Contact Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="centerEmail" required placeholder="facility@example.org">
+              </div>
+              <div class="col-md-6">
+                <label for="centerStreet" class="form-label small fw-semibold">Street Address <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="centerStreet" required placeholder="Plot 42, Industrial Area">
+              </div>
+              <div class="col-md-3">
+                <label for="centerCity" class="form-label small fw-semibold">City <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="centerCity" required value="Bengaluru">
+              </div>
+              <div class="col-md-3">
+                <label for="centerPostalCode" class="form-label small fw-semibold">Postal Code <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="centerPostalCode" required placeholder="560058">
+              </div>
+              <input type="hidden" id="centerState" value="Karnataka">
+
+              <div class="col-12 mt-3">
+                <label class="form-label small fw-semibold d-block">Accepted Waste Streams <span class="text-danger">*</span></label>
+                <div class="row g-2">
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Organic waste" id="catOrg">
+                      <label class="form-check-label small" for="catOrg">Organic waste</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Plastic" id="catPlast" checked>
+                      <label class="form-check-label small" for="catPlast">Plastic</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Paper and cardboard" id="catPaper" checked>
+                      <label class="form-check-label small" for="catPaper">Paper & Cardboard</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Glass" id="catGlass" checked>
+                      <label class="form-check-label small" for="catGlass">Glass</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Metal" id="catMetal" checked>
+                      <label class="form-check-label small" for="catMetal">Metal & Scrap</label>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="acceptedCats" value="Electronic waste" id="catEWaste">
+                      <label class="form-check-label small" for="catEWaste">Electronic waste</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success fw-bold">Register Facility</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    function toggleCollectorFields(role) {
+      const el = document.getElementById('collectorFields');
+      if (el) el.style.display = role === 'collector' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

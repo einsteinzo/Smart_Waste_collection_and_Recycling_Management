@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waste Segregation & Recycling Guide — WasteWise</title>
+  <meta name="description" content="Official municipal waste segregation rules, color-coded bin standards, and recyclable preparation tips.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/guide.html">Segregation Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="/centers.html">Recycling Directory</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact.html">Help & FAQ</a></li>
+        </ul>
+
+        <div id="auth-nav-container" class="d-flex align-items-center gap-2">
+          <a href="/login.html" class="btn btn-outline-primary btn-sm">Log In</a>
+          <a href="/register.html" class="btn btn-primary btn-sm">Register as Citizen</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="bg-success text-white py-5">
+    <div class="container text-center">
+      <h1 class="display-5 fw-bold mb-2">Source Segregation & Recycling Guide</h1>
+      <p class="lead mb-0 text-white-50">Proper source segregation enables 90%+ material recovery and prevents landfill accumulation.</p>
+    </div>
+  </header>
+
+  <!-- Searchable Quick Checker -->
+  <section class="py-4 bg-white border-bottom shadow-sm">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+          <label for="segregationSearch" class="form-label fw-bold small text-muted text-uppercase mb-2">
+            <i class="bi bi-search me-1"></i> Quick Material Segregation Checker
+          </label>
+          <div class="input-group input-group-lg shadow-sm">
+            <input type="text" class="form-control" id="segregationSearch" placeholder="Type an item (e.g. 'milk packet', 'pizza box', 'banana peel', 'battery', 'glass bottle')...">
+          </div>
+          <div id="quickCheckResult" class="mt-3 d-none"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Color Coded Streams -->
+  <main class="container my-5">
+    <div class="row g-4">
+      
+      <!-- Green: Organic -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-success">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-success fs-6 p-2 rounded-3 me-2"><i class="bi bi-tree"></i></span>
+              <div>
+                <h5 class="fw-bold text-success mb-0">Green Bin: Wet / Organic</h5>
+                <small class="text-muted">Compostable Biomass</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>Fruit and vegetable peels & cuttings</li>
+                <li>Cooked and uncooked leftover food</li>
+                <li>Coffee grounds and tea bags</li>
+                <li>Garden leaves, grass cuttings, twigs</li>
+                <li>Egg shells and nutshells</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-danger">
+              <strong>DO NOT INCLUDE:</strong> Plastic wrap, milk pouches, diapers, treated wood.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blue: Plastic -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-info">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-info fs-6 p-2 rounded-3 me-2 text-white"><i class="bi bi-cup-straw"></i></span>
+              <div>
+                <h5 class="fw-bold text-info mb-0">Blue Bin: Dry Recyclables</h5>
+                <small class="text-muted">Plastics & Polymers</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>PET beverage and water bottles</li>
+                <li>HDPE detergent and shampoo jugs</li>
+                <li>Clean rinsed milk sachets and pouches</li>
+                <li>Rigid plastic food containers</li>
+                <li>Bubble wrap and clean LDPE bags</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-success">
+              <strong>PREPARATION:</strong> Rinse out milk or food residue and allow to dry before binning.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Yellow: Paper -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-warning">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-warning fs-6 p-2 rounded-3 me-2 text-dark"><i class="bi bi-box-seam"></i></span>
+              <div>
+                <h5 class="fw-bold text-warning mb-0">Yellow Bin: Paper & Board</h5>
+                <small class="text-muted">Clean Cellulosic Fiber</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>Corrugated cardboard shipping cartons</li>
+                <li>Newspapers, magazines, and periodicals</li>
+                <li>Office print paper and notebook sheets</li>
+                <li>Cereal and food paper boxes (dry)</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-danger">
+              <strong>DO NOT INCLUDE:</strong> Greasy pizza boxes, used paper napkins, waxed coffee cups.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grey: Glass -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-secondary">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-secondary fs-6 p-2 rounded-3 me-2"><i class="bi bi-cup"></i></span>
+              <div>
+                <h5 class="fw-bold text-secondary mb-0">Grey Bin: Glass Containers</h5>
+                <small class="text-muted">Bottles & Jars</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>Clear, brown, and green beverage bottles</li>
+                <li>Glass food and condiment jars</li>
+                <li>Cosmetic and perfume bottles</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-danger">
+              <strong>DO NOT INCLUDE:</strong> Mirrors, window panes, incandescent bulbs, Pyrex bakeware.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dark: Metals -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-dark">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-dark fs-6 p-2 rounded-3 me-2 text-white"><i class="bi bi-nut"></i></span>
+              <div>
+                <h5 class="fw-bold text-dark mb-0">Dark Bin: Metal & Scrap</h5>
+                <small class="text-muted">Ferrous & Non-Ferrous</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>Aluminum soda & beverage cans</li>
+                <li>Tin and steel canned food containers</li>
+                <li>Metal jar lids and bottle crowns</li>
+                <li>Clean aluminum kitchen foil</li>
+                <li>Old steel/iron utensils and wire</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-success">
+              <strong>PREPARATION:</strong> Flatten cans to save collection space in your home bin.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Red: E-Waste -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm border-top border-4 border-danger">
+          <div class="card-body">
+            <div class="d-flex align-items-center mb-3">
+              <span class="badge bg-danger fs-6 p-2 rounded-3 me-2 text-white"><i class="bi bi-battery-charging"></i></span>
+              <div>
+                <h5 class="fw-bold text-danger mb-0">Red Bin: Domestic E-Waste</h5>
+                <small class="text-muted">Special Certified Processing</small>
+              </div>
+            </div>
+            <div class="mb-3">
+              <strong class="small text-dark d-block mb-1">What Goes In:</strong>
+              <ul class="small text-muted ps-3 mb-0">
+                <li>Defunct mobile phones and tablets</li>
+                <li>Broken laptop adapters, chargers, cables</li>
+                <li>Household batteries and dry cells</li>
+                <li>Computer peripherals (mouse, keyboards)</li>
+              </ul>
+            </div>
+            <div class="p-2 rounded bg-light small text-danger">
+              <strong>WARNING:</strong> Never throw batteries in regular municipal bins due to fire risks.
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto">
+    <div class="container text-center small text-muted">
+      WasteWise Portal — College Web Technology IA3 Project
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script>
+    // Quick segregation search dictionary
+    const itemGuide = [
+      { name: 'banana peel', bin: 'Green Bin (Organic / Wet Waste)', note: 'Compostable. Decomposes within 2-4 weeks.' },
+      { name: 'vegetable scraps', bin: 'Green Bin (Organic / Wet Waste)', note: 'Compostable biomass.' },
+      { name: 'milk packet', bin: 'Blue Bin (Plastic Recyclable)', note: 'Rinse with water, dry thoroughly, and bundle.' },
+      { name: 'water bottle', bin: 'Blue Bin (Plastic Recyclable)', note: 'PET plastic. Crush bottle to minimize volume.' },
+      { name: 'pizza box', bin: 'Mixed / Compostable if clean', note: 'If soaked in cheese/oil, tear oily part into Wet Waste; clean lid in Yellow Bin.' },
+      { name: 'cardboard box', bin: 'Yellow Bin (Paper & Cardboard)', note: 'Flatten boxes to save collector transport space.' },
+      { name: 'newspaper', bin: 'Yellow Bin (Paper & Cardboard)', note: 'Keep dry. 100% recyclable into fresh paper.' },
+      { name: 'glass bottle', bin: 'Grey Bin (Glass Recyclable)', note: 'Rinse and pack safely without breaking.' },
+      { name: 'aluminum can', bin: 'Dark Bin (Metal & Scrap)', note: 'High recycling value. Melted with 95% energy savings.' },
+      { name: 'battery', bin: 'Red Bin (Domestic E-Waste)', note: 'Hazardous. Store in separate container; request doorstep E-waste pickup.' },
+      { name: 'old phone', bin: 'Red Bin (Domestic E-Waste)', note: 'Handled by authorized electronic dismantlers only.' },
+    ];
+
+    const searchInput = document.getElementById('segregationSearch');
+    const resultBox = document.getElementById('quickCheckResult');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (!q) {
+        resultBox.classList.add('d-none');
+        return;
+      }
+
+      const match = itemGuide.find(item => item.name.includes(q) || q.includes(item.name));
+      resultBox.classList.remove('d-none');
+      if (match) {
+        resultBox.innerHTML = `
+          <div class="alert alert-success d-inline-block text-start p-3 shadow-sm">
+            <h6 class="fw-bold mb-1"><i class="bi bi-check-circle-fill text-success me-2"></i>Destination: ${match.bin}</h6>
+            <p class="small mb-0 text-dark">${match.note}</p>
+          </div>
+        `;
+      } else {
+        resultBox.innerHTML = `
+          <div class="alert alert-info d-inline-block text-start p-3 shadow-sm">
+            <h6 class="fw-bold mb-1"><i class="bi bi-info-circle-fill text-info me-2"></i>Categorization Tip:</h6>
+            <p class="small mb-0 text-dark">If organic/food, place in <strong>Green Bin</strong>. If clean dry plastic, paper, metal, or glass, place in <strong>Dry Recyclables</strong>.</p>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

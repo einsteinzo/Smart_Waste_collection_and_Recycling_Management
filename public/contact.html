@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help, Support & FAQs — WasteWise Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/guide.html">Segregation Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="/centers.html">Recycling Directory</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/contact.html">Help & FAQ</a></li>
+        </ul>
+
+        <div id="auth-nav-container" class="d-flex align-items-center gap-2">
+          <a href="/login.html" class="btn btn-outline-primary btn-sm">Log In</a>
+          <a href="/register.html" class="btn btn-primary btn-sm">Register as Citizen</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-success text-white py-5">
+    <div class="container text-center">
+      <h1 class="display-5 fw-bold mb-2">Help, Inquiries & Support</h1>
+      <p class="lead mb-0 text-white-50">Frequently asked questions and municipal citizen assistance desk.</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <div class="row g-5">
+      
+      <!-- FAQs Accordion -->
+      <div class="col-lg-7">
+        <h4 class="fw-bold mb-3"><i class="bi bi-question-circle text-success me-2"></i>Frequently Asked Questions</h4>
+        
+        <div class="accordion shadow-sm" id="faqAccordion">
+          
+          <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+              <button class="accordion-button fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                How do I request a waste pickup from my home?
+              </button>
+            </h2>
+            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted small">
+                Simply register as a citizen or log in, then click <strong>"Request Pickup"</strong> on your dashboard. Choose your waste category (Plastic, E-Waste, Paper, Organic, etc.), enter an estimated quantity, select your preferred date/time slot, and confirm. An administrator will assign a collector to your neighborhood.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                Can I cancel a scheduled pickup request?
+              </button>
+            </h2>
+            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted small">
+                Yes! You can cancel any request as long as its status is <strong>Requested</strong> or <strong>Assigned</strong> (before physical collection takes place). Once the collector has picked up and weighed the materials on-site, the request cannot be cancelled.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                How does the actual weight verification work?
+              </button>
+            </h2>
+            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted small">
+                Citizens enter an <em>estimated quantity</em> when booking. When the collector arrives, they use a certified portable digital scale to record the <em>actual collected weight</em>. Upon delivery, the recycling facility weighs and screens the materials, recording the <em>net recycled weight</em> and any contaminated rejects.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item border-0 border-bottom">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                How do collectors and recycling centers get accounts?
+              </button>
+            </h2>
+            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+              <div class="accordion-body text-muted small">
+                For security and regulatory compliance, collectors and recycling facilities are vetted and onboarded directly by municipal <strong>Administrators</strong>. Public registration is reserved for citizens.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-5">
+        <div class="card shadow-sm border-0 p-4 bg-light">
+          <h5 class="fw-bold text-dark mb-2"><i class="bi bi-chat-left-dots text-success me-2"></i>Send an Inquiry or Report</h5>
+          <p class="small text-muted mb-3">Report illegal garbage dumping, missed collections, or facility inquiries.</p>
+
+          <form id="contactForm">
+            <div class="mb-3">
+              <label for="cName" class="form-label small fw-semibold">Your Name</label>
+              <input type="text" class="form-control" id="cName" required placeholder="Full Name">
+            </div>
+            <div class="mb-3">
+              <label for="cEmail" class="form-label small fw-semibold">Email Address</label>
+              <input type="email" class="form-control" id="cEmail" required placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+              <label for="cType" class="form-label small fw-semibold">Subject / Issue Type</label>
+              <select class="form-select" id="cType">
+                <option value="Inquiry">General Portal Inquiry</option>
+                <option value="Dumping">Report Illegal Dumping Spot</option>
+                <option value="Missed">Missed Scheduled Pickup</option>
+                <option value="Facility">Facility Onboarding Request</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="cMsg" class="form-label small fw-semibold">Message / Location Details</label>
+              <textarea class="form-control" id="cMsg" rows="3" required placeholder="Describe your inquiry or specify the street address..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2">
+              <i class="bi bi-send me-1"></i> Submit Ticket
+            </button>
+          </form>
+
+          <div class="mt-4 pt-3 border-top small text-muted">
+            <div><i class="bi bi-telephone text-success me-2"></i>Helpline: +91 80 2266 0000 (08:00 - 20:00)</div>
+            <div><i class="bi bi-envelope text-success me-2"></i>Support: support@wastewise.org</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto text-center small text-muted">
+    WasteWise Portal — College Web Technology IA3 Project
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/public.js"></script>
+</body>
+</html>

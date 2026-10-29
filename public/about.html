@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About The Project — WasteWise Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+          <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="/guide.html">Segregation Guide</a></li>
+          <li class="nav-item"><a class="nav-link" href="/centers.html">Recycling Directory</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact.html">Help & FAQ</a></li>
+        </ul>
+
+        <div id="auth-nav-container" class="d-flex align-items-center gap-2">
+          <a href="/login.html" class="btn btn-outline-primary btn-sm">Log In</a>
+          <a href="/register.html" class="btn btn-primary btn-sm">Register as Citizen</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="bg-success text-white py-5">
+    <div class="container text-center">
+      <h1 class="display-5 fw-bold mb-2">About WasteWise Portal</h1>
+      <p class="lead mb-0 text-white-50">Web Technology IA3 Project — Smart Municipal Waste Management & Circular Economy</p>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <div class="row g-5">
+      
+      <!-- Left Column: Project Overview -->
+      <div class="col-lg-8">
+        <h3 class="fw-bold mb-3 text-dark">1. Executive Summary & Problem Statement</h3>
+        <p class="text-muted">
+          Rapid urbanization and growing consumer waste generate immense municipal strain. Traditional waste management often suffers from poor segregation at source, unverified contractor collections, rampant illegal open-air dumping, and lack of transparency between citizens and recycling processors.
+        </p>
+        <p class="text-muted">
+          <strong>WasteWise</strong> bridges this gap by providing an end-to-end digital lifecycle connecting <strong>Citizens</strong>, municipal <strong>Collectors</strong>, authorized <strong>Recycling Centers</strong>, and municipal <strong>Administrators</strong>. Every pickup is authenticated, tracked, weighed, and audited.
+        </p>
+
+        <h3 class="fw-bold mt-5 mb-3 text-dark">2. The 5-Stage Closed-Loop Lifecycle</h3>
+        <div class="p-3 bg-light rounded-3 border mb-4">
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-warning text-dark me-2">Requested</span>
+            <span>Citizen creates pickup request with category, estimated weight, and preferred slot.</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-info text-dark me-2">Assigned</span>
+            <span>Admin assigns an active on-duty collector and appropriate licensed recycling facility.</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-primary me-2">Collected</span>
+            <span>Collector arrives on-site, weighs materials on digital scales, and logs actual collected weight.</span>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge text-white me-2" style="background:#ea580c;">Delivered</span>
+            <span>Collector drops off waste at the designated facility intake bay and records drop-off notes.</span>
+          </div>
+          <div class="d-flex align-items-center">
+            <span class="badge bg-success me-2">Completed</span>
+            <span>Facility inspects intake, separates rejects, logs net recycled weight, and records processing outcome.</span>
+          </div>
+        </div>
+
+        <h3 class="fw-bold mt-5 mb-3 text-dark">3. Alignment with UN Sustainable Development Goals (SDGs)</h3>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="p-3 border rounded-3 h-100 bg-white shadow-sm">
+              <span class="badge bg-primary mb-2">UN SDG 11</span>
+              <h5 class="fw-bold text-dark">Sustainable Cities & Communities</h5>
+              <p class="small text-muted mb-0">Reduces adverse per-capita environmental impact of cities by paying special attention to air quality and municipal waste management.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 border rounded-3 h-100 bg-white shadow-sm">
+              <span class="badge bg-success mb-2">UN SDG 12</span>
+              <h5 class="fw-bold text-dark">Responsible Consumption & Production</h5>
+              <p class="small text-muted mb-0">Substantially reduces waste generation through prevention, reduction, recycling, and reuse of materials.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Technology & Architecture Stack -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm border-0 bg-light p-3">
+          <h5 class="fw-bold text-dark mb-3"><i class="bi bi-stack me-2 text-success"></i>Technology Stack</h5>
+          
+          <div class="mb-3">
+            <strong class="small text-dark d-block">Frontend Architecture:</strong>
+            <span class="badge bg-white text-dark border me-1">HTML5</span>
+            <span class="badge bg-white text-dark border me-1">CSS3</span>
+            <span class="badge bg-white text-dark border me-1">Bootstrap 5</span>
+            <span class="badge bg-white text-dark border me-1">Vanilla JS</span>
+            <span class="badge bg-white text-dark border">Chart.js</span>
+          </div>
+
+          <div class="mb-3">
+            <strong class="small text-dark d-block">Backend Architecture:</strong>
+            <span class="badge bg-white text-dark border me-1">Node.js (v22)</span>
+            <span class="badge bg-white text-dark border me-1">Express.js</span>
+            <span class="badge bg-white text-dark border me-1">REST API</span>
+            <span class="badge bg-white text-dark border">express-validator</span>
+          </div>
+
+          <div class="mb-3">
+            <strong class="small text-dark d-block">Database & Persistence:</strong>
+            <span class="badge bg-white text-dark border me-1">MongoDB</span>
+            <span class="badge bg-white text-dark border me-1">Mongoose v9</span>
+            <span class="badge bg-white text-dark border">connect-mongo</span>
+          </div>
+
+          <div class="mb-3">
+            <strong class="small text-dark d-block">Security & Authentication:</strong>
+            <span class="badge bg-white text-dark border me-1">bcryptjs</span>
+            <span class="badge bg-white text-dark border me-1">express-session</span>
+            <span class="badge bg-white text-dark border me-1">Helmet CSP</span>
+            <span class="badge bg-white text-dark border">Anti-CSRF Tokens</span>
+          </div>
+
+          <hr>
+          <div class="small text-muted">
+            <strong>Evaluation Details:</strong><br>
+            Subject: Web Technology (IA3 Project)<br>
+            Department: Computer Science & Engineering<br>
+            Academic Year: 2024–2025
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4 mt-auto text-center small text-muted">
+    WasteWise Portal — College Web Technology IA3 Project
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>

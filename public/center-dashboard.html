@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recycling Center Dashboard — WasteWise Portal</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+    <div class="container-fluid px-4">
+      <a class="navbar-brand" href="/index.html">
+        <i class="bi bi-recycle text-success fs-3"></i>
+        <span>WasteWise</span>
+        <span class="badge bg-secondary-subtle text-secondary small ms-2">MRF / Recycling Facility</span>
+      </a>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="d-none d-md-block text-end">
+          <span class="fw-bold d-block user-display-name">Center Manager</span>
+          <small class="text-muted user-display-email">center@wastewise.org</small>
+        </div>
+        <button type="button" id="logoutBtn" onclick="handleLogout(event)" class="btn btn-outline-danger btn-sm logout-btn">
+          <i class="bi bi-box-arrow-right me-1"></i> Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="container-fluid px-4 py-4">
+    
+    <!-- Title and facility banner -->
+    <div class="card border-0 shadow-sm p-4 bg-white rounded-4 mb-4">
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <span class="badge bg-success-subtle text-success fw-bold px-3 py-1 mb-2">
+            <i class="bi bi-patch-check-fill me-1"></i> Licensed Processing Facility
+          </span>
+          <h3 class="fw-bold text-dark mb-1" id="facilityTitle">Recycling & Materials Recovery Center</h3>
+          <p class="text-muted small mb-0">Verify incoming deliveries, filter non-recyclable contaminants, and record final resource recovery outcomes.</p>
+        </div>
+        <div>
+          <select class="form-select form-select-sm" id="deliveryStatusFilter" onchange="loadDeliveries()">
+            <option value="Delivered" selected>Awaiting Intake Verification (Delivered)</option>
+            <option value="Completed">Processed & Verified (Completed)</option>
+            <option value="All">All Center Records</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Metrics -->
+    <div class="row g-3 mb-4">
+      <div class="col-sm-6 col-xl-2 offset-xl-1">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #ea580c;">
+          <span class="text-muted small fw-bold">PENDING INTAKE</span>
+          <h3 class="fw-bold text-dark mb-0" id="statIncomingDeliveries">0</h3>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-2">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #10b981;">
+          <span class="text-muted small fw-bold">COMPLETED</span>
+          <h3 class="fw-bold text-dark mb-0" id="statCompletedDeliveries">0</h3>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-2">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #0284c7;">
+          <span class="text-muted small fw-bold">GROSS RECEIVED</span>
+          <h3 class="fw-bold text-dark mb-0" id="statTotalReceivedKg">0 kg</h3>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-2">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #ef4444;">
+          <span class="text-muted small fw-bold">REJECTED / RESIDUAL</span>
+          <h3 class="fw-bold text-danger mb-0" id="statTotalRejectedKg">0 kg</h3>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-xl-2">
+        <div class="card card-dashboard-stat p-3 bg-white h-100" style="border-left-color: #2e7d32;">
+          <span class="text-muted small fw-bold">NET RECYCLED</span>
+          <h3 class="fw-bold text-success mb-0" id="statTotalRecycledKg">0 kg</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Incoming Deliveries Table -->
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+      <div class="card-header bg-white py-3 border-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-box-arrow-in-down text-success me-2"></i>Incoming Waste Deliveries</h5>
+        <div class="d-flex gap-2">
+          <select class="form-select form-select-sm" id="deliveryStatusFilter" onchange="loadDeliveries()" style="width: 220px;">
+            <option value="All" selected>All Inbound & Arrived</option>
+            <option value="Delivered">Awaiting Verification (Arrived)</option>
+            <option value="Completed">Processed & Verified</option>
+            <option value="InTransit">In Transit / Assigned</option>
+          </select>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light small text-uppercase text-muted">
+              <tr>
+                <th>Delivery ID</th>
+                <th>Waste Category</th>
+                <th>Collector Weight</th>
+                <th>Collector Name</th>
+                <th>Drop-off Timestamp</th>
+                <th>Status</th>
+                <th class="text-end">Verification Action</th>
+              </tr>
+            </thead>
+            <tbody id="deliveriesTableBody">
+              <!-- Populated via center.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div id="deliveriesEmptyState" class="text-center py-5 d-none">
+          <i class="bi bi-check2-circle text-success display-4"></i>
+          <h5 class="fw-bold text-dark mt-3">No Pending Deliveries</h5>
+          <p class="text-muted">All arrived waste consignments have been inspected and processed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Facility Intake & Processing History -->
+    <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+      <div class="card-header bg-white py-3 border-bottom">
+        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-journal-text text-primary me-2"></i>Certified Material Processing Records</h5>
+      </div>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light small text-uppercase text-muted">
+              <tr>
+                <th>Date</th>
+                <th>Material Stream</th>
+                <th>Gross Received</th>
+                <th>Contaminants Rejected</th>
+                <th>Net Recycled</th>
+                <th>Processing Outcome</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody">
+              <!-- Populated via center.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal: Confirm Receipt & Processing -->
+  <div class="modal fade" id="verifyReceiptModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content border-0 shadow-lg rounded-4">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title fw-bold"><i class="bi bi-check2-circle me-2"></i>Verify Material Receipt & Processing</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="verifyReceiptForm">
+          <div class="modal-body p-4">
+            
+            <div class="p-3 bg-light rounded-3 mb-4">
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <small class="text-muted d-block">Consignment ID:</small>
+                  <strong id="verifyPickupId">—</strong>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted d-block">Declared Stream:</small>
+                  <strong id="verifyCategory" class="text-dark">—</strong>
+                </div>
+                <div class="col-md-4">
+                  <small class="text-muted d-block">Collector Recorded Weight:</small>
+                  <strong id="verifyCollectorWeight" class="text-primary">—</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="receivedWeight" class="form-label fw-bold small">Actual Facility Scale Received Weight (kg) <span class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="receivedWeight" step="0.1" min="0.1" max="20000" required>
+                  <span class="input-group-text">kg</span>
+                </div>
+                <small class="text-muted">Weight measured at facility weighbridge / floor scale</small>
+              </div>
+
+              <div class="col-md-6">
+                <label for="rejectedWeight" class="form-label fw-bold small">Rejected Contaminants / Non-recyclables (kg)</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="rejectedWeight" step="0.1" min="0" max="20000" value="0">
+                  <span class="input-group-text">kg</span>
+                </div>
+                <small class="text-muted">Impurities removed during sorting (0 if fully clean)</small>
+              </div>
+
+              <div class="col-12">
+                <div class="p-3 border rounded-3 bg-light d-flex justify-content-between align-items-center">
+                  <span class="fw-bold text-dark">Calculated Net Recycled Material:</span>
+                  <span class="h4 fw-bold text-success mb-0" id="netRecycledDisplay">0 kg</span>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="processingOutcome" class="form-label fw-bold small">Facility Processing Method <span class="text-danger">*</span></label>
+                <select class="form-select" id="processingOutcome" required>
+                  <option value="Recycled" selected>Recycled (Flaked / Pelleted / Remelted)</option>
+                  <option value="Composted">Composted (Aerobic / Vermicomposting)</option>
+                  <option value="Refurbished / Reused">Refurbished / Reused (Parts Harvested)</option>
+                  <option value="Safely Disposed / Waste-to-Energy">Safely Disposed / Waste-to-Energy</option>
+                </select>
+              </div>
+
+              <div class="col-md-6">
+                <label for="rejectionReason" class="form-label fw-bold small">Rejection / Contamination Reason (If any)</label>
+                <input type="text" class="form-control" id="rejectionReason" placeholder="e.g. Broken ceramics, wet unrecyclable labels">
+              </div>
+
+              <div class="col-12">
+                <label for="processingNotes" class="form-label fw-bold small">Facility Inspection Notes & Batch Number</label>
+                <textarea class="form-control" id="processingNotes" rows="2" placeholder="e.g. Batch #ECO-402 baled and transferred to extrusion shredder."></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer bg-light">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-success fw-bold">
+              <i class="bi bi-shield-check me-1"></i> Authorize & Complete Record
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/center.js"></script>
+</body>
+</html>
